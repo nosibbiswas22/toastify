@@ -1,99 +1,115 @@
-# toastify
+# Toastify
 
-A lightweight and customizable JavaScript library for creating toast notifications. This repository also includes an interactive "Toast Playground" to visually build, configure, and generate code for your toast notifications.
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://nosibbiswas22.github.io/toastify/)
+[![GitHub stars](https://img.shields.io/github/stars/nosibbiswas22/toastify?style=flat)](https://github.com/nosibbiswas22/toastify/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/nosibbiswas22/toastify)](https://github.com/nosibbiswas22/toastify/issues)
+[![Last commit](https://img.shields.io/github/last-commit/nosibbiswas22/toastify)](https://github.com/nosibbiswas22/toastify/commits/main)
+[![License](https://img.shields.io/github/license/nosibbiswas22/toastify)](LICENSE)
 
-## Live Demo
+Toastify is a lightweight, dependency-free JavaScript library for creating customizable toast notifications. It includes an interactive playground for configuring notifications and generating ready-to-use code.
 
-Experience the Toast Playground live and generate your own custom toast notifications with ease.
+## Demo
 
-**[Toastify Playground](https://nosibbiswas22.github.io/toastify/)**
+Try the [Toastify Playground](https://nosibbiswas22.github.io/toastify/) to preview toast notifications and experiment with the available options.
 
 ## Features
 
-- **Multiple Toast Types**: Pre-styled `success`, `error`, `info`, `warn`, and `promise` notifications.
-- **Customizable Themes**: Choose between `light`, `dark`, and `colored` themes.
-- **Flexible Positioning**: Place toasts at any corner or center of the screen (`top-right`, `top-left`, `top-center`, `bottom-right`, `bottom-left`, `bottom-center`).
-- **Engaging Animations**: Animate toasts with `zoom`, `flip`, `slide`, or `bounce` transitions.
-- **Auto-Close Control**: Set a custom duration for toasts to automatically disappear, or disable it entirely.
-- **Interactive Options**: Pause auto-close on hover, close toast on click, and toggle the close button.
-- **Progress Bar**: A visual indicator for the auto-close timer which can be hidden.
-- **Fully Customizable**: Define custom messages, icons (using HTML), colors, and fonts.
-- **Zero Dependencies**: A single JavaScript file that dynamically injects the required CSS.
+- Success, error, info, warning, and promise toast types.
+- Light, dark, and colored themes.
+- Top, bottom, and centered positions.
+- Zoom, flip, slide, and bounce transitions.
+- Configurable auto-close duration or persistent notifications.
+- Pause on hover, close on click, and optional close button.
+- Optional progress bar with configurable starting percentage.
+- Custom messages, icons, colors, and fonts.
+- No package installation or build process required.
 
-## Getting Started
+## Quick Start
 
-1.  Download the `toastify.js` file from the `assets/js/` directory.
-2.  Include the script in your HTML file. The necessary CSS is automatically injected into the `<head>` of your document.
+Copy `assets/js/toastify.js` into your project and load it before your application script:
 
 ```html
 <script src="path/to/toastify.js"></script>
+<script src="path/to/app.js"></script>
 ```
+
+The library injects its toast styles into the document automatically.
 
 ## Usage
 
-To display a toast, call the `showToast()` function with a configuration object. You can also use helper methods for specific toast types.
-
-### Basic Example
+Use the main `showToast()` function or one of its type-specific helpers:
 
 ```javascript
-// A simple success toast that auto-closes after 3 seconds
 showToast.success({
     message: "Your profile has been updated!",
     autoClose: 3000
 });
 ```
 
-### Advanced Example
-
 ```javascript
-// A custom dark-themed error toast with a bounce animation
 showToast.error({
     theme: "dark",
-    message: "Failed to upload file. Please try again.",
+    message: "Failed to upload the file. Please try again.",
     position: "bottom-center",
-    autoClose: 5000,
     transition: "bounce",
     closeAble: true,
     pauseOnHover: true
 });
 ```
 
-### Promise Example
+For a persistent loading notification:
 
 ```javascript
-// A toast that shows a loading state
 showToast.promise({
     message: "Saving your changes...",
-    autoClose: 'none' // Stays until manually closed or updated
+    autoClose: "none"
 });
 ```
 
-## Configuration Options
+## Configuration
 
-The `showToast()` function accepts the following options:
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `type` | `string` | `none` | `success`, `error`, `info`, `warn`, `promise`, or `none`. |
+| `message` | `string` | Type-specific | Text displayed in the notification. |
+| `theme` | `string` | `light` | `light`, `dark`, or `colored`. |
+| `position` | `string` | `top-right` | `top-left`, `top-center`, `top-right`, `bottom-left`, `bottom-center`, or `bottom-right`. |
+| `autoClose` | `number \| string` | `5000` | Duration in milliseconds. Use `none` to keep the toast open. |
+| `transition` | `string` | `zoom` | `zoom`, `flip`, `slide`, or `bounce`. |
+| `hideProgressBar` | `boolean` | `false` | Hides the progress bar when enabled. |
+| `pauseOnHover` | `boolean` | `true` | Pauses the auto-close timer while the pointer is over the toast. |
+| `closeAble` | `boolean` | `true` | Shows the close button when enabled. |
+| `closeOnClick` | `boolean` | `false` | Closes the toast when its content is clicked. |
+| `icon` | `string` | Type-specific | Custom icon HTML. Sanitize untrusted content before use. |
+| `color` | `string` | Type-specific | Custom CSS color for the icon, progress bar, or colored theme. |
+| `font` | `string` | Empty | Custom font family for the message. |
+| `progressPercent` | `number` | `100` | Starting percentage for the progress bar. |
 
-| Option          | Type     | Default                                | Description                                                                                                                                |
-| --------------- | -------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `type`          | `string` | `'none'`                               | The type of toast. Can be `success`, `error`, `info`, `warn`, or `promise`.                                                                |
-| `message`       | `string` | Varies by type                         | The text message to display in the toast.                                                                                                  |
-| `theme`         | `string` | `'light'`                              | The color theme of the toast. Can be `light`, `dark`, or `colored`.                                                                        |
-| `position`      | `string` | `'top-right'`                          | The position of the toast on the screen. e.g., `top-left`, `bottom-center`.                                                                |
-| `autoClose`     | `number` | `5000`                                 | Time in milliseconds before the toast automatically closes. Set to `'none'` to disable.                                                    |
-| `transition`    | `string` | `'zoom'`                               | The entry/exit animation. Can be `zoom`, `flip`, `slide`, or `bounce`.                                                                     |
-| `hideProgressBar`| `boolean`| `false`                                | If `true`, the progress bar indicating the remaining time is hidden.                                                                       |
-| `pauseOnHover`  | `boolean`| `true`                                 | If `true`, the auto-close timer pauses when the mouse is over the toast.                                                                   |
-| `closeAble`     | `boolean`| `true`                                 | If `true`, a close button (X) is displayed.                                                                                                |
-| `closeOnClick`  | `boolean`| `false`                                | If `true`, the toast closes when clicked anywhere on it.                                                                                   |
-| `icon`          | `string` | Varies by type                         | Custom icon HTML (e.g., `<i class="fa fa-rocket"></i>`).                                                                                   |
-| `color`         | `string` | Varies by type                         | Custom color for the icon, progress bar, or background (in `colored` theme). Accepts any valid CSS color.                                |
-| `font`          | `string` | `''`                                   | Custom font family for the toast message (e.g., `"Roboto", sans-serif`).                                                                   |
-| `progressPercent` | `number` | `100`                                | The starting percentage of the progress bar. The bar will animate from this value down to 0. A value of 50 would start the bar halfway. |
+## Playground
 
-## Toast Playground
+The repository's `index.html` provides a visual configuration tool that lets you:
 
-The `index.html` in this repository serves as a powerful playground for `toastify`. It provides a user-friendly interface to:
+- Preview toast notifications live.
+- Configure every supported option.
+- Generate the corresponding JavaScript code.
+- Copy the generated code for use in another project.
 
--   Visually configure all available options.
--   See a live preview of your toast notification.
--   Automatically generate the required JavaScript code.
--   Copy the generated code with a single click to use in your own projects.
+## Development
+
+This is a static HTML, CSS, and JavaScript project. Open `index.html` directly in a browser or serve the repository with any local static web server. No build step is required.
+
+Before submitting a change, test the affected toast types, positions, transitions, close behaviors, and responsive layout in a modern browser.
+
+## Releases
+
+Releases use [Semantic Versioning](https://semver.org/) and Git tags with a `v` prefix. The current stable release is [v1.0.0](https://github.com/nosibbiswas22/toastify/releases/tag/v1.0.0).
+
+## Contributing
+
+Bug reports, documentation improvements, and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for development and submission guidelines.
+
+Please review the [Code of Conduct](CODE_OF_CONDUCT.md) before participating. For security concerns, see [SECURITY.md](SECURITY.md).
+
+## License
+
+Toastify is available under the [MIT License](LICENSE).
